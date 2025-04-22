@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card result">
+    <h2>Analysis Results</h2>
+    
+    <div class="probability-meter">
+        <div class="meter">
+            <div class="progress" style="width: {{ analysis.fake_probability }}%"></div>
+        </div>
+        <div class="labels">
+            <span>0% (Real)</span>
+            <span>100% (Fake)</span>
+        </div>
+        <div class="score">Probability: {{ analysis.fake_probability }}%</div>
+    </div>
+    
+    <div class="indicators">
+        <h3>Key Indicators:</h3>
+        <ul>
+            <li class="{{ 'warning' if analysis.clickbait else '' }}">
+                Clickbait phrases: {{ 'Yes' if analysis.clickbait else 'No' }}
+            </li>
+            <li class="{{ 'warning' if analysis.all_caps else '' }}">
+                Excessive ALL CAPS: {{ 'Yes' if analysis.all_caps else 'No' }}
+            </li>
+            <li class="{{ 'warning' if analysis.excessive_punctuation else '' }}">
+                Too many !/? marks: {{ 'Yes' if analysis.excessive_punctuation else 'No' }}
+            </li>
+            <li>
+                Sentiment: 
+                {% if analysis.sentiment > 0.1 %}
+                    Positive 😊
+                {% elif analysis.sentiment < -0.1 %}
+                    Negative 😠
+                {% else %}
+                    Neutral 😐
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+    
+    <div class="text-sample">
+        <h3>Analyzed Text:</h3>
+        <div class="text-content">{{ text }}</div>
+    </div>
+    
+    <a href="/" class="button">Check Another</a>
+</div>
+{% endblock %}

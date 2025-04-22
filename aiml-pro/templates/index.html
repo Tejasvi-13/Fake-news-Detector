@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <form method="POST" action="/check">
+        <div class="form-group">
+            <label for="news_text">Paste news article text:</label>
+            <textarea name="news_text" id="news_text" rows="8" required></textarea>
+        </div>
+        
+        {% if error %}
+        <div class="error">{{ error }}</div>
+        {% endif %}
+        
+        <button type="submit">Analyze</button>
+    </form>
+</div>
+{% endblock %}
